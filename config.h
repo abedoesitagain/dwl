@@ -9,7 +9,7 @@ static const int bypass_surface_visibility = 0;  /* 1 means idle inhibitors will
 static const unsigned int borderpx         = 1;  /* border pixel of windows */
 static const int showbar                   = 1; /* 0 means no bar */
 static const int topbar                    = 1; /* 0 means bottom bar */
-static const char *fonts[]                 = {"Liberation Mono:size=10"};
+static const char *fonts[]                 = {"Firacode:size=10"};
 static const float rootcolor[]             = COLOR(0x000000ff);
 /* This conforms to the xdg-protocol. Set the alpha to zero to restore the old behavior */
 static const float fullscreen_bg[]         = {0.0f, 0.0f, 0.0f, 1.0f}; /* You can also use glsl colors */
@@ -17,8 +17,9 @@ static int enableautoswallow = 1; /* enables autoswallowing newly spawned client
 static float swallowborder = 1.0f; /* add this multiplied by borderpx to border when a client is swallowed */
 static uint32_t colors[][3]                = {
 	/*               fg          bg          border    */
-	[SchemeNorm] = { 0xd8d8d8ff, 0x181818ff, 0x333333ff },
-    [SchemeSel]  = { 0xd8d8d8ff, 0x005577ff, 0x005577ff },
+	[SchemeNorm] = { 0xffffffff, 0x181818ff, 0x333333ff },
+  //[SchemeSel]  = { 0xd8d8d8ff, 0x005577ff, 0x005577ff },
+    [SchemeSel]  = { 0x181818ff, 0x90a959ff, 0x90a959ff },
 	[SchemeUrg]  = { 0,          0,          0x770000ff },
 };
 
@@ -30,7 +31,8 @@ static int log_level = WLR_ERROR;
 
 /* Autostart */
 static const char *const autostart[] = {
-        "wbg", "/home/abe/pics/wp", NULL,
+        "wbg", "-s", "/home/abe/pics/wp", NULL,
+        "foot", "--server", NULL,
         NULL /* terminate */
 };
 
@@ -38,6 +40,7 @@ static const char *const autostart[] = {
 static const Rule rules[] = {
 	/* app_id             title       tags mask     isfloating   isterm   noswallow   monitor */
 	{ "foot",             NULL,       0,            0,           1,       1,          -1 },
+	{ "footclient",       NULL,       0,            0,           1,       1,          -1 },
 	{ "Gimp_EXAMPLE",     NULL,       0,            1,           0,       0,          -1 }, /* Start on currently visible tags floating, not tiled */
 	{ "firefox_EXAMPLE",  NULL,       1 << 8,       0,           0,       0,          -1 }, /* Start on ONLY tag "9" */
     /* default/example rule: can be changed but cannot be eliminated; at least one rule must exist */
@@ -137,9 +140,9 @@ static const int cursor_timeout = 1;
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
 
 /* commands */
-static const char *termcmd[] = { "foot", NULL };
-static const char *trcmd[] = { "foot", "-e", "tremc", "--skip-version-check", NULL };
-static const char *fmcmd[] = { "foot", "-e", "lf", NULL };
+static const char *termcmd[] = { "footclient", NULL };
+static const char *trcmd[] = { "footclient", "-e", "tremc", "--skip-version-check", NULL };
+static const char *fmcmd[] = { "footclient", "-e", "lf", NULL };
 static const char *lockcmd[] = { "lock", NULL };
 static const char *menucmd[] = { "wmenu-run", NULL };
 static const char *volupcmd[] = { "wpctl", "set-volume", "@DEFAULT_SINK@", "10%+", NULL };
@@ -148,8 +151,8 @@ static const char *mutecmd[] = { "wpctl", "set-mute", "@DEFAULT_SINK@", "toggle"
 static const char *brtupcmd[] = { "brightnessctl", "set", "10%+", NULL };
 static const char *brtdncmd[] = { "brightnessctl", "set", "10%-", NULL };
 static const char *brwsrcmd[] = { "librewolf", NULL };
-static const char *pamxcmd[] = { "foot", "-e", "pulsemixer", NULL };
-static const char *topcmd[] = { "foot", "-e", "btop", NULL };
+static const char *pamxcmd[] = { "footclient", "-e", "pulsemixer", NULL };
+static const char *topcmd[] = { "footclient", "-e", "btop", NULL };
 static const char *scrnshtcmd[] = { "scrnsht", NULL };
 static const char *scrnshtgcmd[] = { "scrnsht-g", NULL };
 static const char *playpausecmd[] = { "playerctl", "play-pause", NULL };
@@ -158,6 +161,7 @@ static const char *wfcmd[] = { "nmenu", NULL };
 static const char *calccmd[] = { "galculator", NULL };
 static const char *opencmd[] = { "open.sh", NULL };
 static const char *connectcmd[] = { "connectmenu", NULL };
+static const char *darktheme[] = { "darkman", "toggle", NULL };
 
 static const Key keys[] = {
 	/* Note that Shift changes certain key codes: c -> C, 2 -> at, etc. */
@@ -169,6 +173,7 @@ static const Key keys[] = {
 	{ MODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_T,          spawn,          {.v = trcmd} },
 	{ MODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_B,          spawn,          {.v = topcmd} },
 	{ MODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_L,          spawn,          {.v = lockcmd} },
+	{ MODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_s,          spawn,          {.v = darktheme} },
 	{ MODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_S,          spawn,          {.v = scrnshtcmd} },
 	{ MODKEY|WLR_MODIFIER_SHIFT|WLR_MODIFIER_CTRL, XKB_KEY_S,          spawn,          {.v = scrnshtgcmd} },
 	{ MODKEY,                    XKB_KEY_w,          spawn,          {.v = brwsrcmd} },
