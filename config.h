@@ -6,10 +6,10 @@
 /* appearance */
 static const int sloppyfocus               = 1;  /* focus follows mouse */
 static const int bypass_surface_visibility = 0;  /* 1 means idle inhibitors will disable idle tracking even if it's surface isn't visible  */
-static const unsigned int borderpx         = 1;  /* border pixel of windows */
+static const unsigned int borderpx         = 1.5;  /* border pixel of windows */
 static const int showbar                   = 1; /* 0 means no bar */
 static const int topbar                    = 1; /* 0 means bottom bar */
-static const char *fonts[]                 = {"Firacode:size=10"};
+static const char *fonts[]                 = {"Fira Code:size=10"};
 static const float rootcolor[]             = COLOR(0x000000ff);
 /* This conforms to the xdg-protocol. Set the alpha to zero to restore the old behavior */
 static const float fullscreen_bg[]         = {0.0f, 0.0f, 0.0f, 1.0f}; /* You can also use glsl colors */
@@ -18,7 +18,7 @@ static float swallowborder = 1.0f; /* add this multiplied by borderpx to border 
 static uint32_t colors[][3]                = {
 	/*               fg          bg          border    */
 	[SchemeNorm] = { 0xffffffff, 0x181818ff, 0x333333ff },
-  //[SchemeSel]  = { 0xd8d8d8ff, 0x005577ff, 0x005577ff },
+  /*[SchemeSel]  = { 0xd8d8d8ff, 0x005577ff, 0x005577ff },*/
     [SchemeSel]  = { 0x181818ff, 0x90a959ff, 0x90a959ff },
 	[SchemeUrg]  = { 0,          0,          0x770000ff },
 };
@@ -41,6 +41,7 @@ static const Rule rules[] = {
 	/* app_id             title       tags mask     isfloating   isterm   noswallow   monitor */
 	{ "foot",             NULL,       0,            0,           1,       1,          -1 },
 	{ "footclient",       NULL,       0,            0,           1,       1,          -1 },
+	{ "st",               NULL,       0,            0,           1,       1,          -1 },
 	{ "Gimp_EXAMPLE",     NULL,       0,            1,           0,       0,          -1 }, /* Start on currently visible tags floating, not tiled */
 	{ "firefox_EXAMPLE",  NULL,       1 << 8,       0,           0,       0,          -1 }, /* Start on ONLY tag "9" */
     /* default/example rule: can be changed but cannot be eliminated; at least one rule must exist */
@@ -162,18 +163,22 @@ static const char *calccmd[] = { "galculator", NULL };
 static const char *opencmd[] = { "open.sh", NULL };
 static const char *connectcmd[] = { "connectmenu", NULL };
 static const char *darktheme[] = { "darkman", "toggle", NULL };
+static const char *opentodo[] = { "footclient", "nvim", "/home/abe/docs/todo.md",NULL };
+static const char *rsscmd[] = { "footclient", "newsboat", NULL };
 
 static const Key keys[] = {
 	/* Note that Shift changes certain key codes: c -> C, 2 -> at, etc. */
 	/* modifier                  key                 function        argument */
 	{ MODKEY,                    XKB_KEY_p,          spawn,          {.v = menucmd} },
 	{ MODKEY,                    XKB_KEY_Return,     spawn,          {.v = termcmd} },
+	{ MODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_N,          spawn,          {.v = rsscmd} },
 	{ MODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_P,          spawn,          {.v = pamxcmd} },
 	{ MODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_Return,     spawn,          {.v = fmcmd} },
 	{ MODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_T,          spawn,          {.v = trcmd} },
 	{ MODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_B,          spawn,          {.v = topcmd} },
 	{ MODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_L,          spawn,          {.v = lockcmd} },
-	{ MODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_s,          spawn,          {.v = darktheme} },
+	{ MODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_D,          spawn,          {.v = darktheme} },
+	{ MODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_i,          spawn,          {.v = opentodo} },
 	{ MODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_S,          spawn,          {.v = scrnshtcmd} },
 	{ MODKEY|WLR_MODIFIER_SHIFT|WLR_MODIFIER_CTRL, XKB_KEY_S,          spawn,          {.v = scrnshtgcmd} },
 	{ MODKEY,                    XKB_KEY_w,          spawn,          {.v = brwsrcmd} },
