@@ -31,8 +31,12 @@ static int log_level = WLR_ERROR;
 
 /* Autostart */
 static const char *const autostart[] = {
+        "gentoo-pipewire-launcher", "restart", NULL,
         "wbg", "-s", "/home/abe/pics/wp", NULL,
+        "kdeconnectd", NULL,
+        "playerctld", NULL,
         "foot", "--server", NULL,
+        "darkman", "run", NULL,
         NULL /* terminate */
 };
 
