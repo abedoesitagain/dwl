@@ -361,6 +361,7 @@ static void pointerfocus(Client *c, struct wlr_surface *surface,
 		double sx, double sy, uint32_t time);
 static void powermgrsetmode(struct wl_listener *listener, void *data);
 static void quit(const Arg *arg);
+static void reload_colors(const Arg *arg);
 static void rendermon(struct wl_listener *listener, void *data);
 static void requestdecorationmode(struct wl_listener *listener, void *data);
 static void requeststartdrag(struct wl_listener *listener, void *data);
@@ -2562,6 +2563,25 @@ quit(const Arg *arg)
 }
 
 void
+reload_colors(const Arg *arg)
+{
+    FILE *f = fopen(colors_file, "r");
+    if (!f) return;
+
+    for (int i = 0; i < (int)LENGTH(colors); i++) {
+        unsigned int fg, bg, border;
+        if (fscanf(f, "%x %x %x", &fg, &bg, &border) != 3)
+            break;
+
+        colors[i][ColFg]    = fg;
+        colors[i][ColBg]    = bg;
+        colors[i][ColBorder] = border;
+    }
+	fclose(f);
+    drawbars();
+}
+
+void
 rendermon(struct wl_listener *listener, void *data)
 {
 	/* This function is called every time an output is ready to display a frame,
@@ -3860,6 +3880,7 @@ main(int argc, char *argv[])
 	if (!getenv("XDG_RUNTIME_DIR"))
 		die("XDG_RUNTIME_DIR must be set");
 	setup();
+	if (refresh_colors) reload_colors(0);
 	run(startup_cmd);
 	cleanup();
 	return EXIT_SUCCESS;
