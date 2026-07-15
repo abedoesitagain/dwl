@@ -169,11 +169,13 @@ static const char *connectcmd[] = { "connectmenu", NULL };
 static const char *darktheme[] = { "darkman", "toggle", NULL };
 static const char *opentodo[] = { "footclient", "nvim", "/home/abe/docs/todo.md",NULL };
 static const char *rsscmd[] = { "footclient", "newsboat", NULL };
+static const char *reeecmd[] = { "reee", NULL };
 
 static const Key keys[] = {
 	/* Note that Shift changes certain key codes: c -> C, 2 -> at, etc. */
 	/* modifier                  key                 function        argument */
 	{ MODKEY,                    XKB_KEY_p,          spawn,          {.v = menucmd} },
+	{ MODKEY,                    XKB_KEY_r,          spawn,          {.v = reeecmd} },
 	{ MODKEY,                    XKB_KEY_Return,     spawn,          {.v = termcmd} },
 	{ MODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_N,          spawn,          {.v = rsscmd} },
 	{ MODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_P,          spawn,          {.v = pamxcmd} },
