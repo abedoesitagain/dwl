@@ -3140,7 +3140,7 @@ switchxkbrule(const Arg *arg)
 int
 statusin(int fd, unsigned int mask, void *data)
 {
-	char status[256];
+	char status[512];
 	ssize_t n;
 
 	if (mask & WL_EVENT_ERROR)
