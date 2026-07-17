@@ -16,24 +16,14 @@ static const float rootcolor[]             = COLOR(0x000000ff);
 /* This conforms to the xdg-protocol. Set the alpha to zero to restore the old behavior */
 static const float fullscreen_bg[]         = {0.0f, 0.0f, 0.0f, 1.0f}; /* You can also use glsl colors */
 static int enableautoswallow = 1; /* enables autoswallowing newly spawned clients */
-static int isdark = 1; /* enables autoswallowing newly spawned clients */
 static float swallowborder = 1.0f; /* add this multiplied by borderpx to border when a client is swallowed */
-
-static uint32_t colorsdark[][3]                = {
+static uint32_t colors[][3]                = {
 	/*               fg          bg          border    */
 	[SchemeNorm] = { 0xffffffff, 0x181818ff, 0x333333ff },
   /*[SchemeSel]  = { 0xd8d8d8ff, 0x005577ff, 0x005577ff },*/
     [SchemeSel]  = { 0x181818ff, 0x90a959ff, 0x90a959ff },
 	[SchemeUrg]  = { 0,          0,          0x770000ff },
 };
-static uint32_t colorslight[][3]                = {
-	/*               fg          bg          border    */
-	[SchemeNorm] = { 0x181818ff, 0xffffffff, 0x333333ff },
-  /*[SchemeSel]  = { 0xd8d8d8ff, 0x005577ff, 0x005577ff },*/
-    [SchemeSel]  = { 0x181818ff, 0x90a959ff, 0x90a959ff },
-	[SchemeUrg]  = { 0,          0,          0x770000ff },
-};
-static uint32_t colors[][3]=colorsdark[][3];
 
 /* tagging */
 static char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
@@ -192,7 +182,6 @@ static const Key keys[] = {
 	{ MODKEY,                    XKB_KEY_p,          spawn,          {.v = menucmd} },
 	{ MODKEY,                    XKB_KEY_r,          spawn,          {.v = reeecmd} },
 	{ MODKEY,                    XKB_KEY_Return,     spawn,          {.v = termcmd} },
-	{ MODKEY,                    XKB_KEY_f,          switchtheme,    {0} },
 	{ MODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_N,          spawn,          {.v = rsscmd} },
 	{ MODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_P,          spawn,          {.v = pamxcmd} },
 	{ MODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_Return,     spawn,          {.v = fmcmd} },
