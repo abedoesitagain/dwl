@@ -1651,6 +1651,16 @@ dirtomon(enum wlr_direction dir)
 }
 
 void
+switchtheme(void)
+{
+    if (isdark==1){
+        colors=colorslight;
+    }else{
+        colors=colorsdark;
+    }
+}
+
+void
 drawbar(Monitor *m)
 {
 	int x, w, tw = 0;
