@@ -10,8 +10,6 @@ static const unsigned int borderpx         = 1.5;  /* border pixel of windows */
 static const int showbar                   = 1; /* 0 means no bar */
 static const int topbar                    = 1; /* 0 means bottom bar */
 static const char *fonts[]                 = {"Fira Code:size=10"};
-static const char *cursor_theme            = "Neutral++";
-static const char cursor_size[]            = "24"; /* Make sure it's a valid integer, otherwise things will break */
 static const float rootcolor[]             = COLOR(0x000000ff);
 /* This conforms to the xdg-protocol. Set the alpha to zero to restore the old behavior */
 static const float fullscreen_bg[]         = {0.0f, 0.0f, 0.0f, 1.0f}; /* You can also use glsl colors */
@@ -55,13 +53,12 @@ static const char *const autostart[] = {
 
 static const Rule rules[] = {
 	/* app_id             title       tags mask     isfloating   isterm   noswallow   monitor */
-	//{ "foot",             NULL,       0,            0,           1,       1,          -1 },
+	{ "foot",             NULL,       0,            0,           1,       1,          -1 },
 	{ "footclient",       NULL,       0,            0,           1,       1,          -1 },
 	{ "st",               NULL,       0,            0,           1,       1,          -1 },
-	{ "anki",             NULL,       0,            1,           0,       0,          -1 },
-	{ "Gimp",             NULL,       0,            1,           0,       0,          -1 },
-	{ "librewolf",        NULL,       0,            0,           0,       0,          -1 },
-	{ "firefox_EXAMPLE",  NULL,       1 << 8,       0,           0,       0,          -1 },
+	{ "Gimp_EXAMPLE",     NULL,       0,            1,           0,       0,          -1 }, /* Start on currently visible tags floating, not tiled */
+	{ "firefox_EXAMPLE",  NULL,       1 << 8,       0,           0,       0,          -1 }, /* Start on ONLY tag "9" */
+    /* default/example rule: can be changed but cannot be eliminated; at least one rule must exist */
 };
 
 /* layout(s) */
