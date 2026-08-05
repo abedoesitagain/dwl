@@ -6,20 +6,20 @@
 /* appearance */
 static const int sloppyfocus               = 1;  /* focus follows mouse */
 static const int bypass_surface_visibility = 0;  /* 1 means idle inhibitors will disable idle tracking even if it's surface isn't visible  */
-static const unsigned int borderpx         = 1.5;  /* border pixel of windows */
+static const unsigned int borderpx         = 2;  /* border pixel of windows */
 static const int showbar                   = 1; /* 0 means no bar */
 static const int topbar                    = 1; /* 0 means bottom bar */
-static const char *fonts[]                 = {"Fira Code:size=10"};
-static const char *cursor_theme            = "Neutral++";
-static const char cursor_size[]            = "24"; /* Make sure it's a valid integer, otherwise things will break */
+static const char *fonts[]                 = { "Fira Code:size=10"};
+static const char *cursor_theme            =   "Neutral++";
+static const char cursor_size[]            =   "24"; /* Make sure it's a valid integer, otherwise things will break */
 static const float rootcolor[]             = COLOR(0x000000ff);
 /* This conforms to the xdg-protocol. Set the alpha to zero to restore the old behavior */
 static const float fullscreen_bg[]         = {0.0f, 0.0f, 0.0f, 1.0f}; /* You can also use glsl colors */
 static int enableautoswallow = 1; /* enables autoswallowing newly spawned clients */
-static float swallowborder = 1.0f; /* add this multiplied by borderpx to border when a client is swallowed */
+static float swallowborder = 0.0f; /* add this multiplied by borderpx to border when a client is swallowed */
 static uint32_t colors[][3]                = {
 	/*               fg          bg          border    */
-	[SchemeNorm] = { 0xffffffff, 0x181818ff, 0x333333ff },
+	[SchemeNorm] = { 0xffffffff, 0x181818ff, 0x444444ff },
   /*[SchemeSel]  = { 0xd8d8d8ff, 0x005577ff, 0x005577ff },*/
     [SchemeSel]  = { 0x181818ff, 0x90a959ff, 0x90a959ff },
 	[SchemeUrg]  = { 0,          0,          0x770000ff },
@@ -34,9 +34,12 @@ static int log_level = WLR_ERROR;
 /* Autostart */
 static const char *const autostart[] = {
         "gentoo-pipewire-launcher", "restart", NULL,
+        //"exec", "/usr/libexec/xdg-desktop-portal-wlr", "-r", NULL,
+        //"exec", "/usr/libexec/xdg-desktop-portal-gtk", "-r", NULL,
         "wbg", "-s", "/home/abe/pics/wp", NULL,
-        "kdeconnectd", NULL,
+        "syncthing", "--no-browser", NULL,
         "playerctld", NULL,
+        "kdeconnectd", NULL,
         "foot", "--server", NULL,
         "darkman", "run", NULL,
         NULL /* terminate */
@@ -166,6 +169,7 @@ static const char *scrnshtgcmd[] = { "scrnsht-g", NULL };
 static const char *playpausecmd[] = { "playerctl", "play-pause", NULL };
 static const char *nextcmd[] = { "playerctl", "next", NULL };
 static const char *prevcmd[] = { "playerctl", "previous", NULL };
+static const char *stopcmd[] = { "playerctl", "stop", NULL };
 static const char *btcmd[] = { "btmenu", "Bluetooth", NULL };
 static const char *wfcmd[] = { "nmenu", NULL };
 static const char *calccmd[] = { "galculator", NULL };
@@ -210,6 +214,7 @@ static const Key keys[] = {
 	{ WLR_MODIFIER_SHIFT|WLR_MODIFIER_CTRL, XKB_KEY_J,    spawn,     {.v = voldncmd} },
 	{ 0,                    XKB_KEY_XF86AudioRaiseVolume, spawn,     {.v = volupcmd} },
 	{ 0,                    XKB_KEY_XF86AudioLowerVolume, spawn,     {.v = voldncmd} },
+	{ 0,                    XKB_KEY_XF86AudioStop,        spawn,     {.v = voldncmd} },
 	{ 0,                    XKB_KEY_XF86AudioMute,        spawn,     {.v = mutecmd} },
 	{ WLR_MODIFIER_SHIFT|WLR_MODIFIER_CTRL|WLR_MODIFIER_ALT, XKB_KEY_K,          spawn,     	 {.v = brtupcmd} },
 	{ 0,                    XKB_KEY_XF86MonBrightnessUp, spawn,     	 {.v = brtupcmd} },
