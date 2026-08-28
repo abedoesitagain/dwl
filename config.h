@@ -33,25 +33,28 @@ static int log_level = WLR_ERROR;
 
 /* Autostart */
 static const char *const autostart[] = {
-        "gentoo-pipewire-launcher", "restart", NULL,
-        //"exec", "/usr/libexec/xdg-desktop-portal-wlr", "-r", NULL,
-        //"exec", "/usr/libexec/xdg-desktop-portal-gtk", "-r", NULL,
+        /* "gentoo-pipewire-launcher", "restart", NULL, */
+        /* "exec", "/usr/libexec/xdg-desktop-portal-wlr", "-r", NULL,
+        "exec", "sh -c 'sleep 5;exec /usr/libexec/xdg-desktop-portal -r'", NULL,
+        "exec", "/usr/libexec/xdg-desktop-portal-gtk", "-r", NULL,*/
         "wbg", "-s", "/home/abe/pics/wp", NULL,
         "syncthing", "--no-browser", NULL,
         "playerctld", NULL,
         "kdeconnectd", NULL,
-        "foot", "--server", NULL,
+        "foot", "-s", NULL,
         "darkman", "run", NULL,
+        "udiskie", NULL,
         NULL /* terminate */
 };
 
 
 static const Rule rules[] = {
 	/* app_id             title       tags mask     isfloating   isterm   noswallow   monitor */
-	//{ "foot",             NULL,       0,            0,           1,       1,          -1 },
+//  { "foot",             NULL,       0,            0,           1,       1,          -1 },
 	{ "footclient",       NULL,       0,            0,           1,       1,          -1 },
 	{ "st",               NULL,       0,            0,           1,       1,          -1 },
 	{ "anki",             NULL,       0,            1,           0,       0,          -1 },
+	{ "udiskie",          NULL,       0,            1,           0,       0,          -1 },
 	{ "Gimp",             NULL,       0,            1,           0,       0,          -1 },
 	{ "librewolf",        NULL,       0,            0,           0,       0,          -1 },
 	{ "firefox_EXAMPLE",  NULL,       1 << 8,       0,           0,       0,          -1 },
@@ -86,6 +89,10 @@ static const struct xkb_rule_names xkb_rules[] = {
 	},
 	{
 		.layout = "ara",
+		.options = "caps:escape",
+	},
+	{
+		.layout = "de",
 		.options = "caps:escape",
 	},
 };
@@ -152,8 +159,8 @@ static const int cursor_timeout = 1;
 
 /* commands */
 static const char *termcmd[] = { "footclient", NULL };
-static const char *trcmd[] = { "footclient", "-e", "tremc", "--skip-version-check", NULL };
-static const char *fmcmd[] = { "footclient", "-e", "lf", NULL };
+static const char *trcmd[] = { "footclient", "-e", "tmux", "new-session", "tremc",  NULL };
+static const char *fmcmd[] = { "footclient", "-e", "tmux", "new-session", "lf", NULL };
 static const char *lockcmd[] = { "lock", NULL };
 static const char *menucmd[] = { "wmenu-run", NULL };
 static const char *volupcmd[] = { "wpctl", "set-volume", "@DEFAULT_SINK@", "10%+", NULL };
@@ -162,8 +169,8 @@ static const char *mutecmd[] = { "wpctl", "set-mute", "@DEFAULT_SINK@", "toggle"
 static const char *brtupcmd[] = { "brightnessctl", "set", "10%+", NULL };
 static const char *brtdncmd[] = { "brightnessctl", "set", "10%-", NULL };
 static const char *brwsrcmd[] = { "librewolf", NULL };
-static const char *pamxcmd[] = { "footclient", "-e", "pulsemixer", NULL };
-static const char *topcmd[] = { "footclient", "-e", "btop", NULL };
+static const char *pamxcmd[] = { "footclient", "-e", "tmux", "new-session", "pulsemixer", NULL };
+static const char *topcmd[] = { "footclient", "-e", "tmux", "new-session","btop", NULL };
 static const char *scrnshtcmd[] = { "scrnsht", NULL };
 static const char *scrnshtgcmd[] = { "scrnsht-g", NULL };
 static const char *playpausecmd[] = { "playerctl", "play-pause", NULL };
@@ -176,8 +183,8 @@ static const char *calccmd[] = { "galculator", NULL };
 static const char *opencmd[] = { "open.sh", NULL };
 static const char *connectcmd[] = { "connectmenu", NULL };
 static const char *darktheme[] = { "darkman", "toggle", NULL };
-static const char *opentodo[] = { "footclient", "nvim", "/home/abe/docs/todo.md",NULL };
-static const char *rsscmd[] = { "footclient", "newsboat", NULL };
+static const char *opentodo[] = { "obsidian",NULL };
+static const char *rsscmd[] = { "librewolf", "https://rss.zdx.fr/", NULL };
 static const char *reeecmd[] = { "reee", NULL };
 
 static const Key keys[] = {
