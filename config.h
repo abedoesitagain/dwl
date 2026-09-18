@@ -37,7 +37,7 @@ static const char *const autostart[] = {
         /* "exec", "/usr/libexec/xdg-desktop-portal-wlr", "-r", NULL,
         "exec", "sh -c 'sleep 5;exec /usr/libexec/xdg-desktop-portal -r'", NULL,
         "exec", "/usr/libexec/xdg-desktop-portal-gtk", "-r", NULL,*/
-        "wbg", "-s", "/home/abe/pics/wp", NULL,
+        "awww-daemon", NULL,
         "syncthing", "--no-browser", NULL,
         "playerctld", NULL,
         "kdeconnectd", NULL,
@@ -159,8 +159,8 @@ static const int cursor_timeout = 1;
 
 /* commands */
 static const char *termcmd[] = { "footclient", NULL };
-static const char *trcmd[] = { "footclient", "-e", "tmux", "new-session", "tremc",  NULL };
-static const char *fmcmd[] = { "footclient", "-e", "tmux", "new-session", "lf", NULL };
+static const char *trcmd[] = { "footclient", "-e", "tremc",  NULL };
+static const char *fmcmd[] = { "footclient", "-e", "lf", NULL };
 static const char *lockcmd[] = { "lock", NULL };
 static const char *menucmd[] = { "wmenu-run", NULL };
 static const char *volupcmd[] = { "wpctl", "set-volume", "@DEFAULT_SINK@", "10%+", NULL };
@@ -169,8 +169,8 @@ static const char *mutecmd[] = { "wpctl", "set-mute", "@DEFAULT_SINK@", "toggle"
 static const char *brtupcmd[] = { "brightnessctl", "set", "10%+", NULL };
 static const char *brtdncmd[] = { "brightnessctl", "set", "10%-", NULL };
 static const char *brwsrcmd[] = { "librewolf", NULL };
-static const char *pamxcmd[] = { "footclient", "-e", "tmux", "new-session", "pulsemixer", NULL };
-static const char *topcmd[] = { "footclient", "-e", "tmux", "new-session","btop", NULL };
+static const char *pamxcmd[] = { "footclient", "-e", "pulsemixer", NULL };
+static const char *topcmd[] = { "footclient", "-e", "btop", NULL };
 static const char *scrnshtcmd[] = { "scrnsht", NULL };
 static const char *scrnshtgcmd[] = { "scrnsht-g", NULL };
 static const char *playpausecmd[] = { "playerctl", "play-pause", NULL };
