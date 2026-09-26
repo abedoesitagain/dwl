@@ -6,7 +6,12 @@
 /* appearance */
 static const int sloppyfocus               = 1;  /* focus follows mouse */
 static const int bypass_surface_visibility = 0;  /* 1 means idle inhibitors will disable idle tracking even if it's surface isn't visible  */
+static const int smartgaps                 = 0;  /* 1 means no outer gap when there is only one window */
+static int gaps                            = 1;  /* 1 means gaps between windows are added */
+static const unsigned int gappx            = 10; /* gap pixel between windows */
 static const unsigned int borderpx         = 2;  /* border pixel of windows */
+static const int refresh_colors            = 1; /* 1 means reloading colors when the session starts*/
+static const char *colors_file             = "/home/abe/.cache/dwl-colors"; /* change the username */
 static const int showbar                   = 1; /* 0 means no bar */
 static const int topbar                    = 1; /* 0 means bottom bar */
 static const char *fonts[]                 = { "Fira Code:size=10"};
@@ -20,7 +25,6 @@ static float swallowborder = 0.0f; /* add this multiplied by borderpx to border 
 static uint32_t colors[][3]                = {
 	/*               fg          bg          border    */
 	[SchemeNorm] = { 0xffffffff, 0x181818ff, 0x444444ff },
-  /*[SchemeSel]  = { 0xd8d8d8ff, 0x005577ff, 0x005577ff },*/
     [SchemeSel]  = { 0x181818ff, 0x90a959ff, 0x90a959ff },
 	[SchemeUrg]  = { 0,          0,          0x770000ff },
 };
@@ -33,10 +37,6 @@ static int log_level = WLR_ERROR;
 
 /* Autostart */
 static const char *const autostart[] = {
-        /* "gentoo-pipewire-launcher", "restart", NULL, */
-        /* "exec", "/usr/libexec/xdg-desktop-portal-wlr", "-r", NULL,
-        "exec", "sh -c 'sleep 5;exec /usr/libexec/xdg-desktop-portal -r'", NULL,
-        "exec", "/usr/libexec/xdg-desktop-portal-gtk", "-r", NULL,*/
         "awww-daemon", NULL,
         "syncthing", "--no-browser", NULL,
         "playerctld", NULL,
@@ -63,7 +63,7 @@ static const Rule rules[] = {
 /* layout(s) */
 static const Layout layouts[] = {
 	/* symbol     arrange function */
-	{ "[]=",      tile },
+    { "[]=",      tile },
 	{ "><>",      NULL },    /* no layout function means floating behavior */
 	{ "[M]",      monocle },
 };
@@ -183,7 +183,7 @@ static const char *calccmd[] = { "galculator", NULL };
 static const char *opencmd[] = { "open.sh", NULL };
 static const char *connectcmd[] = { "connectmenu", NULL };
 static const char *darktheme[] = { "darkman", "toggle", NULL };
-static const char *opentodo[] = { "obsidian",NULL };
+static const char *opentodo[] = { "bash", "-c", "footclient -e vi ~/docs/journal/diary/$(date '+%Y-%m-%d').md" ,NULL };
 static const char *rsscmd[] = { "librewolf", "https://rss.zdx.fr/", NULL };
 static const char *reeecmd[] = { "reee", NULL };
 
@@ -200,10 +200,11 @@ static const Key keys[] = {
 	{ MODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_B,          spawn,          {.v = topcmd} },
 	{ MODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_L,          spawn,          {.v = lockcmd} },
 	{ MODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_D,          spawn,          {.v = darktheme} },
-	{ MODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_i,          spawn,          {.v = opentodo} },
+	{ MODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_I,          spawn,          {.v = opentodo} },
 	{ MODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_S,          spawn,          {.v = scrnshtcmd} },
 	{ MODKEY|WLR_MODIFIER_SHIFT|WLR_MODIFIER_CTRL, XKB_KEY_S,          spawn,          {.v = scrnshtgcmd} },
 	{ MODKEY,                    XKB_KEY_w,          spawn,          {.v = brwsrcmd} },
+	{ MODKEY,                    XKB_KEY_g,          togglegaps,     {0} },
 	{ MODKEY,                    XKB_KEY_i,          spawn,          {.v = wfcmd} },
 	{ MODKEY,                    XKB_KEY_u,          spawn,          {.v = btcmd} },
 	{ MODKEY,                    XKB_KEY_s,          spawn,          {.v = playpausecmd} },
@@ -215,6 +216,7 @@ static const Key keys[] = {
 	{ 0,                         XKB_KEY_XF86Calculator, spawn,    	 {.v = calccmd} },
 	{ MODKEY,                    XKB_KEY_b,          togglebar,      {0} },
 	{ MODKEY,                    XKB_KEY_j,          focusstack,     {.i = +1} },
+	{ MODKEY,                    XKB_KEY_n,          reload_colors,  {0} },
 	{ MODKEY,                    XKB_KEY_k,          focusstack,     {.i = -1} },
 	{ MODKEY,                    XKB_KEY_space,      switchxkbrule,  {0} },
 	{ WLR_MODIFIER_SHIFT|WLR_MODIFIER_CTRL, XKB_KEY_K,    spawn,     {.v = volupcmd} },
